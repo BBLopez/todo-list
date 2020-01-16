@@ -4,11 +4,20 @@ window.onload = function() {
     const newElemInput = document.getElementById('new-elem');
     const list = document.getElementById('list');
 
+    //Add element to list
     document.getElementById('add-btn').addEventListener('click', function() {
         if (newElemInput.value) {
             let domElem = createDomListElem(newElemInput.value);
             createListElem(newElemInput.value, domElem);
             newElemInput.value = '';
+        }
+    });
+
+    //Remove element from list
+    document.getElementById('list').addEventListener('click', function(event) {
+        if (event.target.classList.contains('delete-btn')) {
+            todo.delete(parseInt(event.target.parentElement.getAttribute('data-id')));
+            event.target.parentElement.remove();
         }
     });
 };
