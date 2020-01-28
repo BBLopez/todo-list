@@ -1,14 +1,18 @@
+let list;
+let todo;
+let lastId;
+let newElemInput;
+
 window.onload = function() {
-    todo = new Map();
     lastId = 0;
-    const newElemInput = document.getElementById('new-elem');
-    const list = document.getElementById('list');
+    todo = new Map();
+    list = document.getElementById('list');
+    newElemInput = document.getElementById('new-elem');
 
     //Add element to list
     document.getElementById('add-btn').addEventListener('click', function() {
         if (newElemInput.value) {
-            let domElem = createDomListElem(newElemInput.value);
-            createListElem(newElemInput.value, domElem);
+            createListElem(newElemInput.value);
             newElemInput.value = '';
         }
     });
@@ -16,51 +20,58 @@ window.onload = function() {
     //Remove element from list
     document.getElementById('list').addEventListener('click', function(event) {
         if (event.target.classList.contains('delete-btn')) {
-            todo.delete(parseInt(event.target.parentElement.getAttribute('data-id')));
+            todo.delete(parseInt(event.target.parentElement.getAttribute('id')));
             event.target.parentElement.remove();
+        }
+    });
+
+    //Mark element as done/undone
+    document.getElementById('list').addEventListener('click', function(event) {
+        if (event.target.classList.contains('check')) {
+            event.target.parentElement.classList.toggle('active');
         }
     });
 };
 
-class ListElem {
-
-    constructor(title, domElem) {
-        this.title = title;
-        this.domElem = domElem;
-    }
-
-    finish() {
-        this.domElem.classList.remove('active');
-    }
-}
-
-function createDomListElem(title) {
+function createListElem(title) {
+    addElemToList(title);
     let newLi = document.createElement('li');
+    newLi.setAttribute('id', lastId);
     newLi.classList.add('active');
-    newLi.innerHTML = title;
-    addOptions(newLi);
-
+    addOptions(title, newLi);
     list.appendChild(newLi);
-
-    return newLi;
 }
 
-function addOptions(li) {
+function addOptions(title, li) {
+    addCheckbox(li);
+    addSpan(title, li);
+    addDeleteBtn(li);
+}
+
+function addElemToList(title) {
+    lastId++;
+    todo.set(lastId, title);
+}
+
+function addDeleteBtn(li) {
     let deleteBtn = document.createElement('button');
     deleteBtn.innerHTML = 'x';
     deleteBtn.classList.add('delete-btn');
     li.appendChild(deleteBtn);
 }
 
-function createListElem(title, domElem) {
-    let newListElem = new ListElem(title, domElem);
-    addElemToList(newListElem);
-    console.log(todo)
+function addCheckbox(li) {
+    let check = document.createElement('input');
+    check.type = 'checkbox';
+    check.id = li.id + '-check';
+    check.classList.add('check');
+    li.appendChild(check);
 }
 
-function addElemToList(newListElem) {
-    lastId++;
-    newListElem.domElem.setAttribute('data-id', lastId);
-    todo.set(lastId, newListElem);
+function addSpan(title, li) {
+    let span = document.createElement('span');
+    span.classList.add('title');
+    span.innerHTML = title;
+    li.appendChild(span);
 }
 
