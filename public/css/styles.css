@@ -1,0 +1,54 @@
+/* Colors */
+html, body {
+  height: 100%;
+  font-size: 62.5%;
+  margin: 0; }
+
+* {
+  box-sizing: border-box; }
+
+body {
+  background-color: darkslategrey;
+  padding-top: 15rem; }
+  body .container {
+    font-size: 2rem;
+    padding: 2rem;
+    margin: 0 auto;
+    width: 30%;
+    background-color: darkslategrey;
+    box-shadow: -10px -10px 20px #426f6f, 10px 10px 20px #1c2f2f;
+    border-radius: 2rem; }
+    body .container .custom-input {
+      height: 3rem; }
+    body .container .add-btn {
+      background-color: #000;
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      cursor: pointer;
+      height: 3rem;
+      width: 3rem;
+      margin: 0 1rem;
+      line-height: 3rem;
+      position: relative;
+      z-index: 1; }
+      body .container .add-btn:before {
+        background-color: inherit;
+        border-bottom-right-radius: 5rem;
+        border-top-right-radius: 5rem;
+        content: 'Add';
+        display: block;
+        height: 3rem;
+        left: 50%;
+        line-height: 3.2rem;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        transition: all 0.2s ease-out;
+        width: 0;
+        z-index: -1;
+        font-family: 'Odibee Sans', cursive; }
+      body .container .add-btn:hover:before {
+        width: 60px;
+        opacity: 1; }
